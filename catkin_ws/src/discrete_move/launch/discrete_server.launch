@@ -1,0 +1,4 @@
+<launch>
+    <rosparam file="$(find discrete_move)/config/discrete_move.yaml" command="load"/>
+    <node name="server" pkg="discrete_move" type="server.py" output="screen" />
+</launch>

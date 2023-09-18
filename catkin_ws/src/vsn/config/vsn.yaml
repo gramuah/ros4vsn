@@ -1,0 +1,3 @@
+vsn:
+    goal: "chair"
+    camera_topic: "/camera/color/image_raw"

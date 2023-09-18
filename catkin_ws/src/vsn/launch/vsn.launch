@@ -1,0 +1,4 @@
+<launch>
+    <rosparam file="$(find vsn)/config/vsn.yaml" command="load"/>
+    <node name="vsn_node" pkg="vsn" type="vsn.py" output="screen" />
+</launch>
