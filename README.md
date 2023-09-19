@@ -37,7 +37,14 @@ while the turn left and turn right movements can be parameterized with the exact
 In summary, this ROS package provides a powerful tool for controlling the Lola Robot with a high degree of  precision, 
 making it an excellent choice for a wide range of applications.
 
-## Deploying the Project:
+## Prerequisites:
+* Ubuntu 20.04
+* ROS Noetic
+* Turtlebot2 Robot
+* Camera compatible with ROS
+
+
+## Installing the Project:
 1. **Turtlebot2 Package Installation on ROS Noetic**: To begin, install the Turtlebot2 package on ROS Noetic. We've created a [script](scripts/install_turtlebot.sh) for your convenience.
 
 
