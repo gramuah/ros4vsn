@@ -39,3 +39,19 @@ Furthermore, a ROS server has been designed to enable other ROS packages to conn
 In summary, this ROS package provides a powerful tool for controlling the Lola Robot with a high degree of  precision, 
 making it an excellent choice for a wide range of applications.
 
+## Deploy the project with 
+
+1. Install The Turtlebot2 package installation on ROS noetic. We have created a [script](scripts/install_turtlebot.sh) to install it. 
+
+2. Install camera ROS-compatible with ROS. In our case, we have created a [script](scripts/install_camera.sh). 
+
+3. In order to make compatible our packages with turtlebot you have to write the following line at the start of the *minimal.launch* file in ros package **turtlebot**.
+
+```
+<remap from="mobile_base/commands/velocity" to="cmd_vel"/>
+```
+
+4. 
+
+
+We need the source to be pointing to the turtlebot_ws in order to install turtlebot packages and orbecc astra packages at lola
