@@ -9,6 +9,12 @@ The ROS framework we present is composed of two main packages:
 1. visual_semantic_navigation (vsn)
 2. discrete_move
 
+
+The following image shows the architecture presented in the paper:
+
+<img src="imgs/arquitectura.png" width="500">
+
+
 ## visual_semantic_navigation (vsn) package
 The [vsn](catkin_ws/src/vsn) Package is designed to deploy artificial intelligence models capable of autonomous navigation. 
 This package is a client that interacts with the  [discrete_move](catkin_ws/src/discrete_move) package, 
