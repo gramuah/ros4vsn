@@ -74,7 +74,7 @@ Before launching the project, ensure that the Turtlebot and camera is connected 
 
 ```
 . devel/setup.bash
-roslaunch discrete_move discrete_move_server.launch
+roslaunch discrete_move turtlebot_server.launch
 ```
 
 2. **Launching the VSN client**: To begin, launch the VSN client using the following command in a terminal:
