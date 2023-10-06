@@ -1,4 +1,4 @@
-# Evaluation of Visual Semantic Navigation Models in Real Robots
+# ROS4VSN: Visual Semantic Navigation in Real Robots with ROS
 
 We are glad to introduce a novel ROS-based framework for Visual Semantic Navigation (VSN), designed to simplify the 
 deployment of VSN models on any ROS-compatible robot and tested in the real world. The next figure shows how these VSN model work when deployed on our robotic platforms. 
