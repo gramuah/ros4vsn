@@ -92,3 +92,17 @@ roslaunch vsn vsn.launch
 
 By following these steps, you'll be able to launch the project with randomized movements for a comprehensive functionality test.
 
+## Citation
+
+If you use this code in your research, please consider citing:
+
+```
+@misc{gutierrez-alvarez2023visual,
+      title={Visual Semantic Navigation with Real Robots}, 
+      author={Carlos Gutiérrez-Álvarez and Pablo Ríos-Navarro and Rafael Flor-Rodríguez and Francisco Javier Acevedo-Rodríguez and Roberto J. López-Sastre},
+      year={2023},
+      eprint={2311.16623},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO}
+}
+```
