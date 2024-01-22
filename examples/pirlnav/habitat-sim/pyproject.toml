@@ -1,0 +1,37 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+            "cmake",
+            "ninja",
+            "pip",
+            "setuptools",
+            "wheel",
+           ]
+
+[tool.black]
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | ^examples/tutorials/colabs
+    | ^examples/tutorials/nb_python
+    | build
+    | dist
+    | obselete
+    | deps
+  )/
+)
+'''
+
+[tool.isort]
+skip_glob = ["*/deps/*", "*/build/*", "*/obselete/*"]
+known_first_party = ["habitat_sim"]
+profile = 'black'
+treat_comments_as_code = "# %%"
