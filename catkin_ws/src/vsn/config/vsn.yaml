@@ -1,3 +1,6 @@
 vsn:
-    goal: "chair"
+
+    goal: 5
     camera_topic: "/camera/color/image_raw"
+    pirlnav_path: '/home/lola/pablolola/pirlnav'
+    show_screen_images: False

@@ -1,36 +1,59 @@
 # Deploy PIRLNav project in VSN framework
 
 
-1. Download and install Evaluation of Visual Semantic Navigation Models in Real Robots. Follow our [README.md](README.md)
+1. **Download and install Evaluation of Visual Semantic Navigation Models in Real Robots.** Follow our [README.md](README.md)
+
+2. **Install habitat-lab and habitat-sim versions 0.2.2** by executing the following commands:
+    ```
+   git clone --branch v0.2.2 https://github.com/facebookresearch/habitat-lab.git
+   git clone --branch v0.2.2 https://github.com/facebookresearch/habitat-sim.git
+    ```
+   ```
+   conda create -n pirlnav python=3.7 cmake=3.14.0
+   conda activate pirlnav
+   ```
+   ```
+   cd habitat-sim/
+   pip install -r requirements.txt
+   ./build.sh --headless
+
+   pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
+    ```
+   ```
+   cd habitat-lab/
+   pip install -r requirements.txt
+   pip install -e .
+   ```
 
 
-2. Then, we have to download the **PIRLNav: Pretraining with Imitation and RL Finetuning for ObjetcNav to deploy in a robot**. 
+3. **The repository should look like this:**  
+ros4vsn/  
+├── catkin_ws  
+│   └── src  
+│   │       ├── discrete_move  
+│   │       └── vsn  
+├── examples  
+│   └── pirlnav  
+│   │       ├── configs  
+│   │       ├── habitat-lab  
+│   │       ├── habitat-sim  
+│   │       ├── imgs  
+│   │       ├── pirlnav  
+│   │       ├── ros4pirlnav  
+│   │       └── scripts  
+├── imgs  
+└── scripts  
 
-```
-git clone https://github.com/Ram81/pirlnav.git
-git submodule update --init
+ 
 
-conda create -n pirlnav python=3.7 cmake=3.14.0
-
-cd habitat-sim/
-pip install -r requirements.txt
-./build.sh --headless
-
-pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
-
-cd habitat-lab/
-pip install -r requirements.txt
-
-pip install -e habitat-lab
-pip install -e habitat-baselines
-
-pip install -e .
-```
-
-3. Before, run the project you have to download HM3D Scene and Episode Dataset.
+4. **Download the pre-trained model provided in the official pirlnav repository**. Download it from [here](https://habitat-on-web.s3.amazonaws.com/pirlnav_release/checkpoints/objectnav_rl_ft_hd.ckpt).
+5. Before, run the project you have to **download HM3D Scene and Episode Dataset**.
 
 - Download the HM3D dataset using the instructions [here](https://github.com/facebookresearch/habitat-sim/blob/main/DATASETS.md#habitat-matterport-3d-research-dataset-hm3d) (download the full HM3D dataset for use with habitat)
 
 - Download the ObjectNav HM3D episode dataset from [here](https://github.com/facebookresearch/habitat-lab/blob/main/DATASETS.md#task-datasets).
+
+6. **Copy the content inside of [ros4pirlnav](ros4pirlnav) in [catkin_ws\vsn](../../catkin_ws/src/vsn/scripts)** .
+
 
 

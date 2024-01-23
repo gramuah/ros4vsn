@@ -10,8 +10,6 @@ import os
 from habitat_baselines.common.baseline_registry import baseline_registry
 
 
-## Mirar cómo cambiar esto 
-
 from pirlnav.config import get_config
 
 
