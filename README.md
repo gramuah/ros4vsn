@@ -92,6 +92,12 @@ roslaunch vsn vsn.launch
 
 By following these steps, you'll be able to launch the project with randomized movements for a comprehensive functionality test.
 
+
+## Launching the Project with PIRLNAV:
+This repository is designed for seamless integration with the PIRLNAV model, enhancing your robotic navigation capabilities.  
+To deploy the PIRLNAV model successfully using ROS4VSN, follow the step-by-step instructions in the [examples](examples) directory. In this folder, you will find a detailed guide in the [README](examples/pirlnav/README.md) file.
+
+
 ## Citation
 
 If you use this code in your research, please consider citing:
