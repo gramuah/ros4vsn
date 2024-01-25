@@ -1,7 +1,7 @@
 # Deploy PIRLNav project in VSN framework
 
 
-1. **Download and install Evaluation of Visual Semantic Navigation Models in Real Robots.** Follow our [README.md](README.md)
+1. **Follow the installation instructions of our ROS4VSN library.** See our [README.md](README.md)
 
 2. **Install habitat-lab and habitat-sim versions 0.2.2** by executing the following commands:
     ```
@@ -37,23 +37,22 @@ ros4vsn/
 │   │       ├── configs  
 │   │       ├── habitat-lab  
 │   │       ├── habitat-sim  
-│   │       ├── imgs  
 │   │       ├── pirlnav  
 │   │       ├── ros4pirlnav  
 │   │       └── scripts  
 ├── imgs  
 └── scripts  
-
  
 
-4. **Download the pre-trained model provided in the official pirlnav repository**. Download it from [here](https://habitat-on-web.s3.amazonaws.com/pirlnav_release/checkpoints/objectnav_rl_ft_hd.ckpt).
-5. Before, run the project you have to **download HM3D Scene and Episode Dataset**.
+4. **Download the pre-trained PIRLNav model provided in the official PIRLNav repository**. Download it from [here](https://habitat-on-web.s3.amazonaws.com/pirlnav_release/checkpoints/objectnav_rl_ft_hd.ckpt).
+
+5. Before running the project you must **download HM3D Scene and Episode Datasets**.
 
 - Download the HM3D dataset using the instructions [here](https://github.com/facebookresearch/habitat-sim/blob/main/DATASETS.md#habitat-matterport-3d-research-dataset-hm3d) (download the full HM3D dataset for use with habitat)
 
 - Download the ObjectNav HM3D episode dataset from [here](https://github.com/facebookresearch/habitat-lab/blob/main/DATASETS.md#task-datasets).
 
-6. **Copy the content inside of [ros4pirlnav](ros4pirlnav) in [catkin_ws\vsn](../../catkin_ws/src/vsn/scripts)** .
+6. **Copy the content inside our folder [ros4pirlnav](ros4pirlnav) in [catkin_ws\vsn](../../catkin_ws/src/vsn/scripts)** .
 
 
 
