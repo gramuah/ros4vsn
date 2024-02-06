@@ -52,8 +52,8 @@ ros4vsn/
 
 - Download the ObjectNav HM3D episode dataset from [here](https://github.com/facebookresearch/habitat-lab/blob/main/DATASETS.md#task-datasets).
 
-  6. **Copy the content inside our folder [ros4pirlnav](ros4pirlnav) in [catkin_ws\vsn](../../catkin_ws/src/vsn/scripts)** . This step will ensure you are running
-     PIRLNav model, not the random movement model example.
+6. **Copy the content inside our folder [ros4pirlnav](ros4pirlnav) in [catkin_ws\vsn](../../catkin_ws/src/vsn/scripts)** . This step will ensure you are running
+  PIRLNav model, not the random movement model example.
 
      ```
      cd examples/pirlnav/ros4pirlnav/
@@ -62,17 +62,17 @@ ros4vsn/
      cp vsn.py ../../../catkin_ws/src/vsn/scripts
      ```
 
-     7. Run the PIRLNav model in a Turtlebot robot following our architecture. *First run the movement server*
-        ```
-        cd catkin_ws
-        catkin_make
-        . devel/setup.bash
-        roslaunch discrete_move turtlebot_server.launch 
-        ```
-        While the server is running, execute the *VSN client* as follows:
-        ```
-        cd catkin_ws
-        catkin_make
-        . devel/setup.bash
-        roslaunch vsn vsn.launch 
-        ```
+7. Run the PIRLNav model in a Turtlebot robot following our architecture. *First run the movement server*
+   ```
+   cd catkin_ws
+   catkin_make
+   . devel/setup.bash
+   roslaunch discrete_move turtlebot_server.launch 
+   ```
+   While the server is running, execute the *VSN client* as follows:
+   ```
+   cd catkin_ws
+   catkin_make
+   . devel/setup.bash
+   roslaunch vsn vsn.launch 
+   ```
