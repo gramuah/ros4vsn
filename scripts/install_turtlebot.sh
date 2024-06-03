@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Creating the directories where we will generate the workspace for the turtlebot packages
-mkdir -p ~/turtlebot_ws/src
-cd ~/turtlebot_ws/src
+mkdir -p turtlebot_ws/src
+cd turtlebot_ws/src
 
 # Installing turtlebot packages and pasting in the src directory
 git clone https://github.com/turtlebot/turtlebot.git
@@ -29,5 +29,5 @@ sudo apt install liborocos-kdl-dev -y
 rosdep update
 rosdep install --from-paths . --ignore-src -r -y
 
-cd ~/turtlebot_ws
+cd ..
 catkin_make

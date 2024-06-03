@@ -1,6 +1,7 @@
 <launch>
 	<rosparam file="$(find discrete_move)/config/discrete_move.yaml" command="load"/>
-    <include file="$(find astra_camera)/launch/astra.launch" />
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch" />
     <include file="$(find turtlebot_bringup)/launch/minimal.launch" />
+    <include file="$(find turtlebot_teleop)/launch/logitech.launch" />
     <node name="server" pkg="discrete_move" type="server.py" output="screen" />
 </launch>

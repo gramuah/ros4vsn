@@ -9,12 +9,11 @@ import csv
 import signal
 import cv2
 
-
 import os
 import rospy
 from discrete_move.srv import DiscreteServer, DiscreteServerResponse
 from odometry import Odom
-
+from class_model import Pirlnav
 from image_preprocessing import ImagePreprocessing
 
 show_screen_images = rospy.get_param('/vsn/show_screen_images')
@@ -22,10 +21,10 @@ new_row = []
 pirlnav_path = rospy.get_param('/vsn/pirlnav_path')
 archive_path = os.path.abspath(__file__)
 relative_path = os.path.dirname(archive_path)
-log_route = relative_path+'/log'
+log_route = relative_path + '/log'
 sys.path.append(pirlnav_path)
 
-from class_model import Pirlnav
+
 def handler(signum, frame):
     ruta_archivo = log_route + '/datos.csv'
     print(new_row)
@@ -40,11 +39,6 @@ def check_depth():
     time.sleep(0.5)
     depth = preprocess.get_image_depth()
     print(depth)
-
-
-    # cv2.imshow("Decision depth image", cv2.cvtColor(depth, cv2.COLOR_RGB2BGR))
-    # if cv2.waitKey(1) & 0xFF == ord('s'):
-    #     exit()
 
     threshold = 0.1
 
@@ -77,8 +71,8 @@ if __name__ == "__main__":
     tim = now.strftime("%d_%m_%H_%M_%S")
 
     base_directory = log_route + tim
-    rgb_directory =  base_directory + '/rgb'
-    depth_directory =  base_directory + '/depth'
+    rgb_directory = base_directory + '/rgb'
+    depth_directory = base_directory + '/depth'
 
     try:
         os.makedirs(rgb_directory, exist_ok=True)
@@ -111,22 +105,11 @@ if __name__ == "__main__":
     time.sleep(1)
 
     while 1:
-        # if num_action == max_action:
-        #     print("Se ha alcanzado numero máximo de steps ")
-        #     ruta_archivo = path + '/datos.csv'
-        #     print(new_row)
-        #     with open(ruta_archivo, 'a', newline='') as archivo_csv:
-        #         escritor = csv.writer(archivo_csv)
-        #
-        #         escritor.writerow(new_row)
-        #     exit(1)
-        image = None
         time.sleep(0.5)
         image = preprocess.get_image_rgb()
 
         if image is not None:
             cv2.imwrite(rgb_directory + "/" + str(num_action) + ".png", cv2.cvtColor(image, cv2.COLOR_RGB2BGR))
-            #cv2.imwrite(depth_directory + "/" + str(num_action) + ".png", preprocess.get_image_depth())
             if show_screen_images:
                 cv2.imshow("  image", cv2.cvtColor(image, cv2.COLOR_RGB2BGR))
                 if cv2.waitKey(1) & 0xFF == ord('s'):
@@ -167,16 +150,5 @@ if __name__ == "__main__":
             if action[0] == 0:
                 rospy.loginfo("Robot reached the goal satisfactorily")
                 server_response = send_action_service("Left", 90)
-
-
-                # ruta_archivo = path + '/datos.csv'
-                # print(new_row)
-                # with open(ruta_archivo, 'a', newline='') as archivo_csv:
-                #     writer = csv.writer(archivo_csv)
-                #
-                #     writer.writerow(new_row)
-                #
-                # exit(1)
-                # break
 
     sys.exit()

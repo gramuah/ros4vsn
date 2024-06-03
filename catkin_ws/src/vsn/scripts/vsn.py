@@ -38,6 +38,7 @@ if __name__ == "__main__":
 
             # IA class
             action, angle = ia.random()
+            rospy.loginfo(f"Taking action: {action}")
 
             server_response = send_action_service(action, angle)
 
