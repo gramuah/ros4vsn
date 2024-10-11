@@ -113,7 +113,7 @@ if __name__ == "__main__":
 
 
     # dataset
-    segmentor_path = 'oursegmodel.pth'
+    segmentor_path = '/home/gram/rafarepos/ros4vsn/examples/semnav/oursegmodel.pth'
 
     #Define the rgb image transform
     transform = transforms.Compose([
@@ -126,8 +126,8 @@ if __name__ == "__main__":
     #Load our image segmentation model
     seg_model = models.segmentation.deeplabv3_resnet50(pretrained=True)
     seg_model.classifier[4] = torch.nn.Conv2d(256, 41, kernel_size=(1, 1))  # Ajustar a 41 clases si es necesario
-    model.load_state_dict(torch.load(segmentor_path), strict=False)
-    model.eval()
+    seg_model.load_state_dict(torch.load(segmentor_path), strict=False)
+    seg_model.eval()
     ###
     num_action = 0
     max_action = 1500000
@@ -138,11 +138,10 @@ if __name__ == "__main__":
         image = preprocess.get_image_rgb()
 
         if image is not None:
-
             ##Generate semantic photo using rgb image
-            input_image = transform(image).unsqueeze(0)
+            input_image = transform(Image.fromarray(image, 'RGB')).unsqueeze(0)
             with torch.no_grad():  # No calcular gradientes
-                output = model(input_image)['out']  # Obtener la salida del modelo
+                output = seg_model(input_image)['out']  # Obtener la salida del modelo
                 output_predictions = output.argmax(dim=1)  # Obtener la clase con mayor probabilidad
 
             # Transform our semantic prediction into rgb semantic prediction
@@ -173,6 +172,7 @@ if __name__ == "__main__":
             input_observation = [{'rgb': image,
                                  'objectgoal': object_goal,
                                   'semantic': output_predictions,
+                                  'semantic_rgb': rgb_matrix,
                                   'compass': position[2],
                                  'gps': np.array([position[0], position[1]])}]
             action = model.evaluation(observation=input_observation)

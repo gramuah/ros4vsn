@@ -54,13 +54,13 @@ class Pirlnav(PPOTrainer):
     def __init__(self):
 
         self.constant = 414534
-
+        self.seed = 17
         self.run_type = "eval"
         archive_path = os.path.abspath(__file__)
         relative_path = os.path.dirname(archive_path)
         self.path = relative_path + "/configs/experiments/il_objectnav.yaml"
         print(self.path)
-        self.opt = ['TENSORBOARD_DIR', 'tb/objectnav_il_rl_ft/ovrl_resnet50/seed_1/', 'NUM_UPDATES', '20000', 'NUM_ENVIRONMENTS', '1', 'RL.DDPPO.pretrained', 'False', 'EVAL.USE_CKPT_CONFIG', False]
+        self.opt = ['TENSORBOARD_DIR', 'tb/objectnav_il_rl_ft/ovrl_resnet50/seed_1/','EVAL_CKPT_PATH_DIR','/home/gram/rafarepos/ros4vsn/examples/semnav/model/ckpt.13.pth', 'NUM_UPDATES', '20000', 'NUM_ENVIRONMENTS', '1', 'RL.DDPPO.pretrained', 'False', 'EVAL.USE_CKPT_CONFIG', False]
 
 
         # Load configuration

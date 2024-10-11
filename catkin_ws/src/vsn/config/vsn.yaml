@@ -2,5 +2,5 @@ vsn:
 
     goal: 0
     camera_topic: "/camera/color/image_raw"
-    pirlnav_path: '/home/gram/repositorios/ros4vsn/examples/pirlnav'
+    pirlnav_path: '/home/gram/rafarepos/ros4vsn/examples/semnav'
     show_screen_images: False
