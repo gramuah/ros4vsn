@@ -61,6 +61,6 @@ DATASET:
   TYPE: ObjectNav-v2
   SPLIT: train
   DATA_PATH: "data/datasets/objectnav/objectnav_hm3d/objectnav_hm3d_v1/{split}/{split}.json.gz"
-  SCENES_DIR: "/home/lola/data/scene_datasets/"
+  SCENES_DIR: "/home/gram/repositorios/ros4vsn/examples/pirlnav/data/40categories_datasets/"
   MAX_EPISODE_STEPS: 500
 

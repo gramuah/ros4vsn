@@ -56,8 +56,8 @@ class ILPolicy(nn.Module, Policy):
         deterministic=False,
         return_distribution=False,
     ):
-        observations['compass'] = torch.zeros(1, dtype=torch.float32, device='cuda:0')
-        observations['gps'] = torch.zeros(1, 2, dtype=torch.float32, device='cuda:0')
+        observations['compass'] = torch.zeros(1, dtype=torch.float32, device='cpu')
+        observations['gps'] = torch.zeros(1, 2, dtype=torch.float32, device='cpu')
 
         features, rnn_hidden_states = self.net(
             observations, rnn_hidden_states, prev_actions, masks

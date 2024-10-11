@@ -1,4 +1,4 @@
-BASE_TASK_CONFIG_PATH: "configs/tasks/objectnav_hm3d.yaml"
+BASE_TASK_CONFIG_PATH: "/home/gram/repositorios/ros4vsn/examples/pirlnav/configs/tasks/objectnav_hm3d.yaml"
 CMD_TRAILING_OPTS: ["TASK_CONFIG.ENVIRONMENT.ITERATOR_OPTIONS.MAX_SCENE_REPEAT_STEPS", "50000"]
 ENV_NAME: "SimpleRLEnv"
 SIMULATOR_GPU_ID: 0
@@ -24,7 +24,7 @@ EVAL:
 
 IL:
   POLICY:
-    name: "ObjectNavILMAEPolicy"
+    name: "SEMANTIC_RGB_ObjectNavILMAEPolicy"
 
 RL:
   SUCCESS_REWARD: 2.5

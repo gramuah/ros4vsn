@@ -24,10 +24,15 @@ from odometry import Odom
 from class_model import Pirlnav
 from image_preprocessing import ImagePreprocessing
 from types import SimpleNamespace
+from torchvision import transforms, models
 import torch
 import torch.nn.functional as F
 
+from src.args import ArgumentParserRGBDSegmentation
+from src.build_model import build_model
+from src.prepare_data import prepare_data
 
+from PIL import Image
 
 def handler(signum, frame):
     ruta_archivo = log_route + '/datos.csv'
@@ -76,11 +81,13 @@ if __name__ == "__main__":
 
     base_directory = log_route + tim
     rgb_directory = base_directory + '/rgb'
+    semantic_directory = base_directory + '/semantic'
     depth_directory = base_directory + '/depth'
     print(rgb_directory)
     try:
         os.makedirs(rgb_directory, exist_ok=True)
         os.makedirs(depth_directory, exist_ok=True)
+        os.makedirs(semantic_directory, exist_ok=True)
         print(f'Directory  was created successfully')
     except OSError as error:
         print(error)
@@ -105,6 +112,23 @@ if __name__ == "__main__":
     rospy.loginfo(f"I'm searching a {object_goal}")
 
 
+    # dataset
+    segmentor_path = 'oursegmodel.pth'
+
+    #Define the rgb image transform
+    transform = transforms.Compose([
+        transforms.Resize((480, 640)),  # Ajustar al tamaño usado en el entrenamiento
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    ])
+    #As were using 40 classes, our constant must be this to use all colors
+    color_constant = np.floor((255*255*255)/40)
+    #Load our image segmentation model
+    seg_model = models.segmentation.deeplabv3_resnet50(pretrained=True)
+    seg_model.classifier[4] = torch.nn.Conv2d(256, 41, kernel_size=(1, 1))  # Ajustar a 41 clases si es necesario
+    model.load_state_dict(torch.load(segmentor_path), strict=False)
+    model.eval()
+    ###
     num_action = 0
     max_action = 1500000
     time.sleep(1)
@@ -115,8 +139,24 @@ if __name__ == "__main__":
 
         if image is not None:
 
+            ##Generate semantic photo using rgb image
+            input_image = transform(image).unsqueeze(0)
+            with torch.no_grad():  # No calcular gradientes
+                output = model(input_image)['out']  # Obtener la salida del modelo
+                output_predictions = output.argmax(dim=1)  # Obtener la clase con mayor probabilidad
+
+            # Transform our semantic prediction into rgb semantic prediction
+            output_predictions = output_predictions.squeeze(0).cpu().numpy()
+            output_predictions = output_predictions*color_constant
+            rgb_matrix = np.zeros((480, 640, 3), dtype=np.uint32)
+            rgb_matrix[:, :, 0] = (output_predictions.astype(np.uint64) >> 16) & 0xFF  # R
+            rgb_matrix[:, :, 1] = (output_predictions.astype(np.uint64) >> 8) & 0xFF  # G
+            rgb_matrix[:, :, 2] = output_predictions.astype(np.uint64) & 0xFF  # B
 
 
+
+            #Save both, rgb and semantic rgb photos
+            cv2.imwrite(semantic_directory + "/" + str(num_action) + ".png", cv2.cvtColor(rgb_matrix.astype(np.uint8),cv2.COLOR_RGB2BGR))
             cv2.imwrite(rgb_directory + "/" + str(num_action) + ".png", cv2.cvtColor(image, cv2.COLOR_RGB2BGR))
 
             if show_screen_images:
@@ -132,7 +172,8 @@ if __name__ == "__main__":
             # IA class
             input_observation = [{'rgb': image,
                                  'objectgoal': object_goal,
-                                 'compass': position[2],
+                                  'semantic': output_predictions,
+                                  'compass': position[2],
                                  'gps': np.array([position[0], position[1]])}]
             action = model.evaluation(observation=input_observation)
             actions.append(action)

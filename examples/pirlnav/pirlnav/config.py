@@ -94,7 +94,7 @@ _CONFIG.VIDEO_DIR = "data/video"
 _CONFIG.TENSORBOARD_DIR = "data/tensorboard"
 _CONFIG.EVAL_CKPT_PATH_DIR = "data/checkpoints"
 _CONFIG.CHECKPOINT_FOLDER = "data/checkpoints"
-_CONFIG.LOG_FILE = "../data/train.log"
+_CONFIG.LOG_FILE = "data/train.log"
 
 _CONFIG.NUM_ENVIRONMENTS = 10
 _CONFIG.LOG_INTERVAL = 10
@@ -159,6 +159,27 @@ _CONFIG.POLICY.RGB_ENCODER.avgpooled_image = False
 _CONFIG.POLICY.RGB_ENCODER.augmentations_name = "jitter+shift"
 _CONFIG.POLICY.RGB_ENCODER.drop_path_rate = 0.0
 _CONFIG.POLICY.RGB_ENCODER.normalize_visual_inputs = False
+
+
+
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER = CN()
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.image_size = 256
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.backbone = "resnet50"
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.resnet_baseplanes = 32
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.vit_use_fc_norm = False
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.vit_global_pool = False
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.vit_use_cls = False
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.vit_mask_ratio = None
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.hidden_size = 512
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.use_augmentations = True
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.use_augmentations_test_time = True
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.randomize_augmentations_over_envs = False
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.pretrained_encoder = None
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.freeze_backbone = False
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.avgpooled_image = False
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.augmentations_name = "shift"
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.drop_path_rate = 0.0
+_CONFIG.POLICY.SEMANTIC_RGB_ENCODER.normalize_visual_inputs = False
 
 _CONFIG.POLICY.STATE_ENCODER = CN()
 _CONFIG.POLICY.STATE_ENCODER.hidden_size = 2048
@@ -234,3 +255,4 @@ def get_config(
 
     config.freeze()
     return config
+

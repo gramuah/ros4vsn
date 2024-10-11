@@ -55,6 +55,4 @@ class ImagePreprocessing:
             return True
 
     def get_image_depth(self):
-        # median = np.median(self._depth_image, axis=0)
-        # self._depth_image = median
         return self._depth_image

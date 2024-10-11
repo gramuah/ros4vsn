@@ -99,7 +99,7 @@ class MoveRobot:
             error = distance - math.hypot(pos[0] - pos_init[0], pos[1] - pos_init[1])
 
             if error > epsilon:
-                print(velocity)
+                #print(velocity)
                 if error > distance * (1-self._acceleration_distance):
                     velocity = self._linear_velocity * (distance-error+(self._linear_velocity/self._initial_velocity_param)) * 1/(self._acceleration_distance)
                 if error < distance * self._acceleration_distance:

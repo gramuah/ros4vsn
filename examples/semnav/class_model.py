@@ -60,7 +60,7 @@ class Pirlnav(PPOTrainer):
         relative_path = os.path.dirname(archive_path)
         self.path = relative_path + "/configs/experiments/il_objectnav.yaml"
         print(self.path)
-        self.opt = ['TENSORBOARD_DIR', 'tb/objectnav_il_rl_ft/ovrl_resnet50/seed_1/', 'EVAL_CKPT_PATH_DIR', relative_path + '/model/ckpt.13.pth', 'NUM_UPDATES', '20000', 'NUM_ENVIRONMENTS', '1', 'RL.DDPPO.pretrained', 'False', 'EVAL.USE_CKPT_CONFIG', False]
+        self.opt = ['TENSORBOARD_DIR', 'tb/objectnav_il_rl_ft/ovrl_resnet50/seed_1/', 'NUM_UPDATES', '20000', 'NUM_ENVIRONMENTS', '1', 'RL.DDPPO.pretrained', 'False', 'EVAL.USE_CKPT_CONFIG', False]
 
 
         # Load configuration
@@ -96,10 +96,11 @@ class Pirlnav(PPOTrainer):
             "gps": spaces.Box(low=-3.4028235e+38, high=3.4028235e+38, shape=(2,), dtype='float32'),
             "objectgoal": spaces.Box(low=0, high=5, shape=(1,), dtype='int64'),
             "rgb": spaces.Box(low=0, high=255, shape=(480, 640, 3), dtype='uint8'),
+            "semantic_rgb": spaces.Box(low=0, high=255, shape=(480, 640, 3), dtype='uint8'),
+            "semantic": spaces.Box(low=0, high=-1, shape=(480, 640, 1), dtype='int32')
         })
         self._init_checkpoint()
         self.config.defrost()
-        self.config.TASK_CONFIG.DATASET.SPLIT = self.config.EVAL.SPLIT
         self.config.TASK_CONFIG.DATASET.TYPE = "ObjectNav-v1"
         self.config.freeze()
 
@@ -117,18 +118,30 @@ class Pirlnav(PPOTrainer):
             self.config, self.observation_space, self.policy_action_space
         )
         self.actor_critic.to(self.device)
-
-        self.agent = DDPILAgent(
-            actor_critic=self.actor_critic,
-            num_envs=1,
-            num_mini_batch=self.il_cfg.num_mini_batch,
-            lr=self.il_cfg.lr,
-            encoder_lr=self.il_cfg.encoder_lr,
-            eps=self.il_cfg.eps,
-            max_grad_norm=self.il_cfg.max_grad_norm,
-            wd=self.il_cfg.wd,
-            entropy_coef=self.il_cfg.entropy_coef,
-        )
+        if 'semantic' in self.observation_space.spaces:
+            self.agent = Semantic_DDPILAgent(
+                actor_critic=self.actor_critic,
+                num_envs=1,
+                num_mini_batch=self.il_cfg.num_mini_batch,
+                lr=self.il_cfg.lr,
+                encoder_lr=self.il_cfg.encoder_lr,
+                eps=self.il_cfg.eps,
+                max_grad_norm=self.il_cfg.max_grad_norm,
+                wd=self.il_cfg.wd,
+                entropy_coef=self.il_cfg.entropy_coef,
+            )
+        else:
+            self.agent = DDPILAgent(
+                actor_critic=self.actor_critic,
+                num_envs=1,
+                num_mini_batch=self.il_cfg.num_mini_batch,
+                lr=self.il_cfg.lr,
+                encoder_lr=self.il_cfg.encoder_lr,
+                eps=self.il_cfg.eps,
+                max_grad_norm=self.il_cfg.max_grad_norm,
+                wd=self.il_cfg.wd,
+                entropy_coef=self.il_cfg.entropy_coef,
+            )
         ##########
         self.actor_critic = self.agent.actor_critic.to(self.device)
 
