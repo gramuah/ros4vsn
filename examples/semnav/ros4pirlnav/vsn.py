@@ -113,7 +113,7 @@ if __name__ == "__main__":
 
 
     # dataset
-    segmentor_path = '/home/gram/rafarepos/ros4vsn/examples/semnav/oursegmodel.pth'
+    segmentor_path = '/home/rafa/repositorios/ros4vsn/examples/semnav/oursegmodel.pth'
 
     #Define the rgb image transform
     transform = transforms.Compose([

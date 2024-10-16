@@ -5,6 +5,8 @@ from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 from tf.transformations import euler_from_quaternion
 
+from sound_play.libsoundplay import SoundClient
+
 
 class MoveRobot:
 
@@ -12,6 +14,9 @@ class MoveRobot:
         """
         Class to control the robot with parameterized movements
         """
+
+        self.my_sound = SoundClient()
+
         self._angle_target = 0
 
         # Robot's update position
@@ -74,8 +79,13 @@ class MoveRobot:
         """
         Publish the stop signal to robot: linear and angular velocity is 0
         """
+        self.my_sound.playWave("/home/rafa/Downloads/antonio-vivaldi.wav")
+        self._update_angle(360*3)
+        epsilon = .08
         r = rospy.Rate(self._publish_freq)
-        self._publish_topic(0, 0)
+        while self._calculate_angle(self._yaw_robot) > epsilon and not rospy.is_shutdown():
+            self._publish_topic(0, self._angular_velocity*1.5)
+            r.sleep()
         r.sleep()
 
     def _move(self, steps: int = 1, forward: int = 1) -> None:

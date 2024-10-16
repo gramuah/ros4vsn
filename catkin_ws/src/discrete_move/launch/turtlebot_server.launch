@@ -1,7 +1,11 @@
 <launch>
-	<rosparam file="$(find discrete_move)/config/discrete_move.yaml" command="load"/>
+    <rosparam file="$(find discrete_move)/config/discrete_move.yaml" command="load"/>
     <include file="$(find realsense2_camera)/launch/rs_camera.launch" />
     <include file="$(find turtlebot_bringup)/launch/minimal.launch" />
     <include file="$(find turtlebot_teleop)/launch/logitech.launch" />
+
+    <!-- Lanzar el nodo soundplay_node -->
+    <node name="soundplay" pkg="sound_play" type="soundplay_node.py" output="screen" />
+
     <node name="server" pkg="discrete_move" type="server.py" output="screen" />
 </launch>
