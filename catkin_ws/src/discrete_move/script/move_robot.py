@@ -75,17 +75,47 @@ class MoveRobot:
         self._turn(1, angle)
         self.stop_robot()
 
+    def happy_stop(self) -> None:
+        """
+        Publish the stop signal to robot: linear and angular velocity is 0
+        """
+        print("HOLA???")
+        self.my_sound.playWave("/home/rafa/Downloads/antonio-vivaldi.wav")
+        self._update_angle(90)
+        epsilon = .08
+
+        r = rospy.Rate(self._publish_freq)
+        print("Comparativa")
+        print(self._calculate_angle(self._yaw_robot) > epsilon)
+        print("Shutdown")
+        print(rospy.is_shutdown())
+        while self._calculate_angle(self._yaw_robot) > epsilon and not rospy.is_shutdown():
+            self._publish_topic(0, self._angular_velocity*1.5)
+            r.sleep()
+
+        for i in range(2):
+            if i % 2 == 0:  # Si es par
+                self._update_angle(-90)
+            else:  # Si es impar
+                self._update_angle(90)
+            epsilon = .08
+
+            r = rospy.Rate(self._publish_freq)
+            print("Comparativa")
+            print(self._calculate_angle(self._yaw_robot) > epsilon)
+            print("Shutdown")
+            print(rospy.is_shutdown())
+            while self._calculate_angle(self._yaw_robot) > epsilon and not rospy.is_shutdown():
+                self._publish_topic(0, self._angular_velocity * 1.5)
+                r.sleep()
+
     def stop_robot(self) -> None:
         """
         Publish the stop signal to robot: linear and angular velocity is 0
         """
-        self.my_sound.playWave("/home/rafa/Downloads/antonio-vivaldi.wav")
-        self._update_angle(360*3)
-        epsilon = .08
+
         r = rospy.Rate(self._publish_freq)
-        while self._calculate_angle(self._yaw_robot) > epsilon and not rospy.is_shutdown():
-            self._publish_topic(0, self._angular_velocity*1.5)
-            r.sleep()
+        self._publish_topic(0, 0)
         r.sleep()
 
     def _move(self, steps: int = 1, forward: int = 1) -> None:

@@ -1,6 +1,6 @@
 discrete_move:
     linear_velocity: 0.3
-    angular_velocity: 0.6
+    angular_velocity: 0.7
     straight_distance: 0.25
     initial_velocity_param: 3
     acceleration_distance: 0.3
