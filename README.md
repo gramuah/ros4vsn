@@ -103,12 +103,20 @@ To deploy the PIRLNAV model successfully using ROS4VSN, follow the step-by-step 
 If you use this code in your research, please consider citing:
 
 ```
-@misc{gutierrez-alvarez2023visual,
-      title={Visual Semantic Navigation with Real Robots}, 
-      author={Carlos Gutiérrez-Álvarez and Pablo Ríos-Navarro and Rafael Flor-Rodríguez and Francisco Javier Acevedo-Rodríguez and Roberto J. López-Sastre},
-      year={2023},
-      eprint={2311.16623},
-      archivePrefix={arXiv},
-      primaryClass={cs.RO}
+@article{Gutierrez-Alvarez2025,
+author={Guti{\'e}rrez-{\'A}lvarez, Carlos
+and R{\'i}os-Navarro, Pablo
+and Flor-Rodr{\'i}guez-Rabad{\'a}n, Rafael
+and Acevedo-Rodr{\'i}guez, Francisco Javier
+and L{\'o}pez-Sastre, Roberto Javier},
+title={Visual semantic navigation with real robots},
+journal={Applied Intelligence},
+year={2025},
+volume={55},
+number={3},
+pages={206},
+issn={1573-7497},
+doi={10.1007/s10489-024-06115-4}
 }
+
 ```
