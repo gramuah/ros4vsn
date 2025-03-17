@@ -1,6 +1,9 @@
 # ROS4VSN: Visual Semantic Navigation with Real Robots
 
-<img src="imgs/abstract.png" width="800">
+<p align="center">
+    <img src="imgs/logo_ros4vsn.png" width="400">
+</p>
+
 
 In this repository we release a novel ROS-based framework for Visual Semantic Navigation (VSN), designed to simplify the deployment of VSN models on any ROS-compatible robot in the real world.
 This work has been detailed in our <a href="https://arxiv.org/abs/2311.16623"> [paper]</a>.
@@ -32,8 +35,8 @@ The ROS framework we present is composed of two main packages:
 2. discrete_move
 
 
-The following image shows the architecture presented in the paper:
-
+The following images show the architecture presented in the paper:
+<img src="imgs/abstract.png" width="800">
 <img src="imgs/arquitectura.png" width="500">
 
 
