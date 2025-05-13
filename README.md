@@ -1,17 +1,42 @@
-# ROS4VSN: Visual Semantic Navigation in Real Robots with ROS
+# ROS4VSN: Visual Semantic Navigation with Real Robots
 
-We are glad to introduce a novel ROS-based framework for Visual Semantic Navigation (VSN), designed to simplify the 
-deployment of VSN models on any ROS-compatible robot and tested in the real world. The next figure shows how these VSN model work when deployed on our robotic platforms. 
+<p align="center">
+    <img src="imgs/logo_ros4vsn.png" width="400">
+</p>
 
-<img src="imgs/abstract.png" width="800">
+
+In this repository we release a novel ROS-based framework for Visual Semantic Navigation (VSN), designed to simplify the deployment of VSN models on any ROS-compatible robot in the real world.
+This work has been detailed in our <a href="https://arxiv.org/abs/2311.16623"> [paper]</a>.
+
+
+**If you use any content of this repo for your work, please cite the following bib entry:**
+
+
+If you use this code in your research, please consider citing:
+
+```
+@article{Gutierrez-Alvarez2025,
+author={Guti{\'e}rrez-{\'A}lvarez, Carlos and R{\'i}os-Navarro, Pablo and Flor-Rodr{\'i}guez-Rabad{\'a}n, Rafael and Acevedo-Rodr{\'i}guez, Francisco Javier and L{\'o}pez-Sastre, Roberto Javier},
+title={Visual semantic navigation with real robots},
+journal={Applied Intelligence},
+year={2025},
+volume={55},
+number={3},
+pages={206},
+issn={1573-7497},
+doi={10.1007/s10489-024-06115-4}
+}
+
+```
+
 
 The ROS framework we present is composed of two main packages:
 1. visual_semantic_navigation (vsn)
 2. discrete_move
 
 
-The following image shows the architecture presented in the paper:
-
+The following images show the architecture presented in the paper:
+<img src="imgs/abstract.png" width="800">
 <img src="imgs/arquitectura.png" width="500">
 
 
@@ -96,19 +121,3 @@ By following these steps, you'll be able to launch the project with randomized m
 ## Launching the Project with PIRLNAV:
 This repository is designed for seamless integration with the PIRLNAV model, enhancing your robotic navigation capabilities.  
 To deploy the PIRLNAV model successfully using ROS4VSN, follow the step-by-step instructions in the [examples](examples) directory. In this folder, you will find a detailed guide in the [README](examples/pirlnav/README.md) file.
-
-
-## Citation
-
-If you use this code in your research, please consider citing:
-
-```
-@misc{gutierrez-alvarez2023visual,
-      title={Visual Semantic Navigation with Real Robots}, 
-      author={Carlos Gutiérrez-Álvarez and Pablo Ríos-Navarro and Rafael Flor-Rodríguez and Francisco Javier Acevedo-Rodríguez and Roberto J. López-Sastre},
-      year={2023},
-      eprint={2311.16623},
-      archivePrefix={arXiv},
-      primaryClass={cs.RO}
-}
-```
