@@ -60,7 +60,7 @@ class Pirlnav(PPOTrainer):
         relative_path = os.path.dirname(archive_path)
         self.path = relative_path + "/configs/experiments/il_objectnav.yaml"
         print(self.path)
-        self.opt = ['TENSORBOARD_DIR', 'tb/objectnav_il_rl_ft/ovrl_resnet50/seed_1/','EVAL_CKPT_PATH_DIR','/home/rafa/repositorios/ros4vsn/examples/semnav/model/ckpt.13.pth', 'NUM_UPDATES', '20000', 'NUM_ENVIRONMENTS', '1', 'RL.DDPPO.pretrained', 'False', 'EVAL.USE_CKPT_CONFIG', False]
+        self.opt = ['TENSORBOARD_DIR', 'tb/objectnav_il_rl_ft/ovrl_resnet50/seed_1/','EVAL_CKPT_PATH_DIR','/home/rafa/repositorios/ros4vsn/examples/pirlnav/model/ckpt.31.pth', 'NUM_UPDATES', '20000', 'NUM_ENVIRONMENTS', '1', 'RL.DDPPO.pretrained', 'False', 'EVAL.USE_CKPT_CONFIG', False]
 
 
         # Load configuration
@@ -110,25 +110,14 @@ class Pirlnav(PPOTrainer):
         self.observation_space = apply_obs_transforms_obs_space(self.observation_space, self.obs_transforms)
         self.obs_space = self.observation_space
 
-        #### SET ACTOR CRITIC
+        #### SET ACTOR CRITICstrict=False
         self.policy = baseline_registry.get_policy(self.config.IL.POLICY.name)
         self.actor_critic = self.policy.from_config(
             self.config, self.observation_space, self.policy_action_space
         )
         self.actor_critic.to(self.device)
-        if 'semantic' in self.observation_space.spaces:
-            self.agent = Semantic_DDPILAgent(
-                actor_critic=self.actor_critic,
-                num_envs=1,
-                num_mini_batch=self.il_cfg.num_mini_batch,
-                lr=self.il_cfg.lr,
-                encoder_lr=self.il_cfg.encoder_lr,
-                eps=self.il_cfg.eps,
-                max_grad_norm=self.il_cfg.max_grad_norm,
-                wd=self.il_cfg.wd,
-                entropy_coef=self.il_cfg.entropy_coef,
-            )
-        else:
+
+        try:
             self.agent = DDPILAgent(
                 actor_critic=self.actor_critic,
                 num_envs=1,
@@ -140,10 +129,18 @@ class Pirlnav(PPOTrainer):
                 wd=self.il_cfg.wd,
                 entropy_coef=self.il_cfg.entropy_coef,
             )
+        except ImportError as e:
+            print(f"Error al importar DDPILAgent: {e}")
+        except AttributeError as e:
+            print(f"Error en los atributos o configuración: {e}")
+        except Exception as e:
+            print(f"Se produjo un error al inicializar DDPILAgent: {e}")
+
         ##########
         self.actor_critic = self.agent.actor_critic.to(self.device)
 
         self.ckpt_dict = self.load_checkpoint(self.opt[3], map_location="cpu")
+
         self.config = self._setup_eval_config(self.ckpt_dict["config"])
 
 
@@ -164,10 +161,14 @@ class Pirlnav(PPOTrainer):
 
         self.observation_space = self.observation_space
 
+        print("Claves en el checkpoint (ckpt_dict['state_dict']):")
+        for key in self.ckpt_dict['state_dict'].keys():
+            print(key)
 
-
-
-
+        # Imprimir las claves que espera el agente (actor_critic)
+        print("\nClaves que espera el agente (agent.state_dict()):")
+        for key in self.agent.state_dict().keys():
+            print(key)
         self.agent.load_state_dict(self.ckpt_dict["state_dict"])
         print("Device")
         print(self.device)
